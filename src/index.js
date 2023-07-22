@@ -1,6 +1,6 @@
 const img = new Image();
 img.crossOrigin = "anonymous";
-img.src = "./assets/rplace-1689987395883.png";
+img.src = "./assets/rplace-1690001813571.png";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -163,56 +163,11 @@ const patterns = [
 ];
 
 
-function canvasToRLE(pixels) {
-  let rleData = [];
-  let currentPixel = null;
-  let count = 0;
-
-  for (let i = 0; i < pixels.length; i += 1) {
-    const pixel = pixels[i];
-
-    if (currentPixel === null) {
-      // First pixel encountered
-      currentPixel = pixel;
-      count = 1;
-    } else if (pixel === currentPixel) {
-      // Same pixel as before, increase count
-      count++;
-    } else {
-      // Different pixel, add the run to the RLE data
-      rleData.push([currentPixel, count]);
-      currentPixel = pixel;
-      count = 1;
-    }
-  }
-
-  // Add the last run to the RLE data
-  if (currentPixel !== null) {
-    rleData.push([currentPixel, count]);
-  }
-
-  return rleData;
-}
-
-// Helper function to check if two arrays are equal
-function arraysEqual(a, b) {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length !== b.length) return false;
-  for (let i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-}
-
-
 img.onload = function () {
   const start = Date.now();
   ctx.drawImage(img, 0, 0);
   const orgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const pixels = new Uint32Array(orgPixels.data.buffer)
-
-  console.log(canvasToRLE(pixels).filter(([color, count]) => count >= 5).reduce((curr, [color, count]) => curr + count, 0));
 
   const pixelColor = (pixels, x, y) => {
     return pixels[(x + y * canvas.width)];
@@ -241,8 +196,11 @@ img.onload = function () {
   };
 
  
-  for (let x = 0; x < canvas.width; x++) {
-    for (let y = 0; y < canvas.height; y++) {
+  const smallestPatternX = 4;
+  const smallestPatternY = 4;
+
+  for (let x = 0; x < canvas.width - smallestPatternX; x++) {
+    for (let y = 0; y < canvas.height - smallestPatternY; y++) {
       for (let pattern of patterns) {
         if (patternCheck(pattern.pixels, pixels, x, y)) {
           foundPatterns.push({ pos: [x, y], pattern });
