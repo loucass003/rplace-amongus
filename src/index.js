@@ -1,133 +1,66 @@
-const img = new Image();
-img.crossOrigin = "anonymous";
-img.src = "./assets/rplace-1690001813571.png";
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 
-canvas.width = 1500;
-canvas.height = 1000;
-ctx.globalAlpha = 1;
-ctx.imageSmoothingEnabled = false;
 
-const amogus = [
-  { pos: [0, 0], enabled: 0 },
-  { pos: [1, 0], enabled: 1 },
-  { pos: [2, 0], enabled: 1 },
-  { pos: [3, 0], enabled: 1 },
-  { pos: [0, 1], enabled: 1 },
-  { pos: [1, 1], enabled: 1 },
-  { pos: [3, 1], enabled: 0 },
-  { pos: [2, 1], enabled: 0 },
-  { pos: [0, 2], enabled: 1 },
-  { pos: [1, 2], enabled: 1 },
-  { pos: [2, 2], enabled: 1 },
-  { pos: [3, 2], enabled: 1 },
-  { pos: [1, 3], enabled: 1 },
-  { pos: [2, 3], enabled: 1 },
-  { pos: [3, 3], enabled: 1 },
-  { pos: [1, 4], enabled: 1 },
-  { pos: [3, 4], enabled: 1 },
-  { pos: [0, 3], enabled: 0 },
-  { pos: [0, 4], enabled: 0 },
-  { pos: [2, 4], enabled: 0 }
-];
-
-const amogus2 = [
-  { pos: [0, 0], enabled: 0 },
-  { pos: [1, 0], enabled: 1 },
-  { pos: [2, 0], enabled: 1 },
-  { pos: [3, 0], enabled: 1 },
-  { pos: [0, 1], enabled: 1 },
-  { pos: [1, 1], enabled: 1 },
-  { pos: [2, 1], enabled: 0 },
-  { pos: [3, 1], enabled: 0 },
-  { pos: [0, 2], enabled: 1 },
-  { pos: [1, 2], enabled: 1 },
-  { pos: [2, 2], enabled: 1 },
-  { pos: [3, 2], enabled: 1 },
-  { pos: [0, 3], enabled: 0 },
-  { pos: [1, 3], enabled: 1 },
-  { pos: [2, 3], enabled: 0 },
-  { pos: [3, 3], enabled: 1 }
-];
-
-const amogus3 = [
-  { pos: [1, 0], enabled: 1 },
-  { pos: [2, 0], enabled: 1 },
-  { pos: [3, 0], enabled: 1 },
-  { pos: [0, 1], enabled: 1 },
-  { pos: [0, 2], enabled: 1 },
-  { pos: [0, 3], enabled: 1 },
-  { pos: [1, 1], enabled: 1 },
-  { pos: [1, 2], enabled: 1 },
-  { pos: [2, 2], enabled: 1 },
-  { pos: [3, 2], enabled: 1 },
-  { pos: [1, 3], enabled: 1 },
-  { pos: [2, 3], enabled: 1 },
-  { pos: [3, 3], enabled: 1 },
-  { pos: [1, 4], enabled: 1 },
-  { pos: [3, 4], enabled: 1 },
-  { pos: [0, 0], enabled: 0 },
-  { pos: [2, 1], enabled: 0 },
-  { pos: [3, 1], enabled: 0 },
-  { pos: [0, 4], enabled: 0 },
-  { pos: [2, 4], enabled: 0 }
-];
-
-const amogus4 = [
-  { pos: [1, 0], enabled: 1 },
-  { pos: [2, 0], enabled: 1 },
-  { pos: [3, 0], enabled: 1 },
-  { pos: [0, 0], enabled: 0 },
-  { pos: [0, 1], enabled: 1 },
-  { pos: [1, 1], enabled: 1 },
-  { pos: [2, 1], enabled: 0 },
-  { pos: [3, 1], enabled: 0 },
-  { pos: [0, 2], enabled: 1 },
-  { pos: [1, 2], enabled: 1 },
-  { pos: [2, 2], enabled: 1 },
-  { pos: [3, 2], enabled: 1 },
-  { pos: [0, 3], enabled: 1 },
-  { pos: [1, 3], enabled: 1 },
-  { pos: [2, 3], enabled: 1 },
-  { pos: [3, 3], enabled: 1 },
-  { pos: [0, 4], enabled: 0 },
-  { pos: [1, 4], enabled: 1 },
-  { pos: [2, 4], enabled: 1 },
-  { pos: [3, 4], enabled: 1 },
-  { pos: [1, 5], enabled: 1 },
-  { pos: [3, 5], enabled: 1 },
-  { pos: [0, 5], enabled: 0 },
-  { pos: [2, 5], enabled: 0 }
-];
-
-const amogus5 = [
-  { pos: [0, 0], enabled: 0 },
-  { pos: [1, 0], enabled: 1 },
-  { pos: [2, 0], enabled: 1 },
-  { pos: [3, 0], enabled: 1 },
-  { pos: [0, 1], enabled: 0 },
-  { pos: [1, 1], enabled: 1 },
-  { pos: [2, 1], enabled: 0 },
-  { pos: [3, 1], enabled: 0 },
-  { pos: [0, 2], enabled: 1 },
-  { pos: [1, 2], enabled: 1 },
-  { pos: [2, 2], enabled: 1 },
-  { pos: [3, 2], enabled: 1 },
-  { pos: [0, 3], enabled: 1 },
-  { pos: [1, 3], enabled: 1 },
-  { pos: [2, 3], enabled: 1 },
-  { pos: [3, 3], enabled: 1 },
-  { pos: [0, 4], enabled: 0 },
-  { pos: [1, 4], enabled: 1 },
-  { pos: [2, 4], enabled: 1 },
-  { pos: [3, 4], enabled: 1 },
-  { pos: [1, 5], enabled: 1 },
-  { pos: [3, 5], enabled: 1 },
-  { pos: [0, 5], enabled: 0 },
-  { pos: [2, 5], enabled: 0 }
-];
-
+const patterns_new = [
+  `
+  0111
+  1100
+  1111
+  0111
+  0101
+  `,
+  `
+  0111
+  1100
+  1111
+  1111
+  0101
+  `,
+  `
+  1111
+  1100
+  1111
+  0111
+  0101
+  `,
+  `
+  111
+  100
+  111
+  111
+  101
+  `,
+  `
+  111
+  100
+  111
+  101
+  101
+  `,
+  `
+  0111
+  1100
+  1111
+  0101
+  `,
+  `
+  0111
+  1100
+  0111
+  0101
+  `,
+  `
+  111
+  100
+  111
+  101
+  `,
+  `
+  011
+  100
+  111
+  101
+  `,
+]
 
 const genVariants = (pattern, { w, h }) => {
   const patterns = [
@@ -154,17 +87,44 @@ const genVariants = (pattern, { w, h }) => {
   return patterns.map((pixels) => ({ pixels: pixels.sort(({  pos: a }, { pos: b }) => (b[0] * b[1]) - (a[0] * a[1])), w, h }))
 }
 
-const patterns = [
-  ...genVariants(amogus, { w: 4, h: 5 }),
-  ...genVariants(amogus2, { w: 4, h: 4 }),
-  ...genVariants(amogus3, { w: 4, h: 5 }),
-  ...genVariants(amogus4, { w: 4, h: 6 }),
-  ...genVariants(amogus5, { w: 4, h: 6 }),
-];
+const patterns = patterns_new
+  .map((p) => {
+    const wihtoutSpaces = p.trim().replaceAll(" ", "");
+    const width = wihtoutSpaces.indexOf("\n");
+    const height = wihtoutSpaces.split("\n").length;
+    return {
+      w: width,
+      h: height,
+      pattern: wihtoutSpaces
+        .replaceAll("\n", "")
+        .split("")
+        .reduce(
+          (curr, item, index) => [
+            ...curr,
+            {
+              pos: [index % width, Math.floor(index / width)],
+              enabled: item === "1"
+            }
+          ],
+          []
+        )
+    };
+  })
+  .map(({ w, h, pattern }) => genVariants(pattern, { w, h }))
+  .flat()
 
 
+const img = new Image();
+img.crossOrigin = "anonymous";
+img.src = "./assets/rplace-1690041639346.png";
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+ctx.globalAlpha = 1;
+ctx.imageSmoothingEnabled = false;
 img.onload = function () {
-  const start = Date.now();
+  canvas.width = img.width;
+  canvas.height = img.height;
   ctx.drawImage(img, 0, 0);
   const orgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const pixels = new Uint32Array(orgPixels.data.buffer)
@@ -211,6 +171,7 @@ img.onload = function () {
   }
 
 
+  const start = Date.now();
   ctx.fillStyle = "rgba(1,1,1, 0.7)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   foundPatterns.forEach(({ pos: start, pattern }) => {
